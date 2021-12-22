@@ -13,7 +13,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 //? initial store
-const initialStore = { cart: cartItems, total: 105, amount: 5 };
+const initialStore = { cart: cartItems, total: 0, amount: 5 };
 //? add reducer to store
 const store = createStore(reducer, initialStore);
 //* redux method that returns the state

@@ -1,0 +1,13 @@
+Good for bigger applications.
+UI > ACTIONS > REDUCER > STORE > UI ...ETC
+
+What is redux?
+
+
+
+Global state/store in react app simmilar to context api
+
+Differnce in the way we update the state.
+
+In redux we cannot update the store directly, not alowed.
+We update  the store with dispatchin an action (what we want to do).

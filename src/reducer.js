@@ -1,5 +1,5 @@
 // actions
-import { CLEAR_CART, DECREASE, INCREASE, REMOVE } from "./actions";
+import { CLEAR_CART, DECREASE, INCREASE, REMOVE, GET_TOTALS } from "./actions";
 
 //? reducer - function that is used to update the store
 // takes 2 arguments - state, aciion
@@ -46,6 +46,30 @@ function reducer(state, action) {
         cart: state.cart.filter(
           (cartItem) => cartItem.id !== action.payload.id
         ),
+      };
+    }
+
+    case GET_TOTALS: {
+      let { total, amount } = state.cart.reduce(
+        (cartTotal, cartItem) => {
+          const { price, amount } = cartItem;
+          const itemTotal = price * amount;
+        
+          cartTotal.amount += amount;
+          cartTotal.total += itemTotal;
+          return cartTotal;
+        },
+        {
+          total: 0,
+          amount: 0,
+        }
+      );
+
+      total = parseFloat(total.toFixed(2));
+      return {
+        ...state,
+        total,
+        amount,
       };
     }
 
