@@ -1,5 +1,11 @@
 import React from "react";
-import { INCREASE, DECREASE, REMOVE } from "../actions";
+import {
+  INCREASE,
+  DECREASE,
+  REMOVE,
+  TOOGLE_AMOUNT,
+  removeItem,
+} from "../actions";
 import { connect } from "react-redux";
 
 const CartItem = ({
@@ -10,6 +16,7 @@ const CartItem = ({
   remove,
   increase,
   decrease,
+  toogleOption,
 }) => {
   return (
     <div className="cart-item">
@@ -32,7 +39,7 @@ const CartItem = ({
         <button
           className="amount-btn"
           onClick={() => {
-             increase();
+            toogleOption("inc");
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -45,7 +52,11 @@ const CartItem = ({
         <button
           className="amount-btn"
           onClick={() => {
-            decrease();
+            if (amount === 1) {
+              remove();
+            } else {
+              toogleOption("dec");
+            }
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -61,15 +72,21 @@ const mapDispatchToProps = (dispatch, ownComponentProps) => {
   const { id, amount } = ownComponentProps;
 
   return {
-    remove: () => {
-      dispatch({ type: REMOVE, payload: { id } });
-    },
-    increase: () => {
-      dispatch({ type: INCREASE, payload: { id, amount } });
-    },
-    decrease: () => {
-      dispatch({ type: DECREASE, payload: { id, amount } });
-    },
+    // remove: () => {
+    //   dispatch({ type: REMOVE, payload: { id } });
+    // },
+    //? REMOVE REPLACED BY BELOW
+    remove: () => dispatch(removeItem(id)),
+
+    // increase: () => {
+    //   dispatch({ type: INCREASE, payload: { id, amount } });
+    // },
+    // decrease: () => {
+    //   dispatch({ type: DECREASE, payload: { id, amount } });
+    // },
+    //? INCREASE AND DECREAS REPLACED BY BELOW
+    toogleOption: (option) =>
+      dispatch({ type: TOOGLE_AMOUNT, payload: { id, option } }),
   };
 };
 
